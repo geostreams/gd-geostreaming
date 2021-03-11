@@ -38,6 +38,7 @@ import type {
 } from 'ol';
 import type { Layer as LayerType } from 'ol/layer';
 
+// TODO: Is it possible to make these dynamic? import data struct from config?
 import annualYieldData from '../../data/annual_yield.json';
 import overallData from '../../data/overall_data.json';
 import { HEADERS_HEIGHT } from '../Layout/Header';
