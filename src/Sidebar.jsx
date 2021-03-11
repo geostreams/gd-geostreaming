@@ -31,10 +31,13 @@ import annualYieldData from '../../data/annual_yield.json';
 import annualLoadData from '../../data/annual_load.json';
 import overallData from '../../data/overall_data.json';
 import {
+    stateName,
+    dataSource,
     getNutrientValueCategoryIndex,
     FEATURE_STYLE_INFO,
     BOUNDARIES,
-    VARIABLES_INFO
+    VARIABLES_INFO,
+    SIDEBAR_INFO,
 } from './config';
 
 type Props = {
@@ -288,10 +291,10 @@ const Sidebar = ({
                     <>
                         <Divider className={classes.divider} />
                         <Typography variant="subtitle1">
-                            TOTAL {selectedNutrient.toUpperCase()} LOAD LEAVING THE STATE OF ILLINOIS
+                            TOTAL {selectedNutrient.toUpperCase()} LEAVING THE STATE OF {stateName.toUpperCase()}
                         </Typography>
                         <Typography variant="caption">
-                            The total {selectedNutrient} load leaving the state of Illinois is estimated to be&nbsp;
+                            The total {selectedNutrient} load leaving the state of {stateName} is estimated to be&nbsp;
                             {overallData.drainage.annual_load[selectedNutrient][selectedYear]}&nbsp;
                             million lb in {selectedYear}.
                         </Typography>
@@ -529,9 +532,9 @@ const Sidebar = ({
                         <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://www2.illinois.gov/epa/topics/water-quality/watershed-management/excess-nutrients/Documents/NLRS_SCIENCE_ASSESSMENT_UPDATE_2019%20v7_FINAL%20VERSION_web.pdf"
+                            href={dataSource.url}
                         >
-                            Illinois Nutrient Reduction Strategy Science Assessment Update 2019
+                            {dataSource.label}
                         </a>
                     </Typography> : null}
             </Container>

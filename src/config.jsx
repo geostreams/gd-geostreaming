@@ -2,18 +2,29 @@
 import * as React from 'react';
 import { DEVICE_PIXEL_RATIO } from 'ol/has';
 import { Fill, Icon, Stroke, Style } from 'ol/style';
-
 import type FeatureType from 'ol/Feature';
 
+// PBF GEOMETRY FILES FOR BOUNDARIES
 import huc8 from '../../data/huc8.pbf';
 import watersheds from '../../data/watersheds.pbf';
-import drainage from '../../data/il-drainage.pbf';
-import monitoringSites from '../../data/il-monitoring-sites.pbf';
+import drainage from '../../data/drainage.pbf';
+import monitoringSites from '../../data/monitoring-sites.pbf';
 import watershedMonitoringSites from '../../data/watersheds-monitoring-sites.pbf';
+
+// IMAGE FILES FOR MAP FEATURES
 import markerMonitoringSite from '../../images/marker_monitoring_site.png';
 import patternNoData from '../../images/pattern_no_data.png';
+
+// JSON DATA
 import annualYieldData from '../../data/annual_yield.json';
 
+export const stateName = 'Illinois';
+export const dataSource = {
+        url: 'https://www2.illinois.gov/epa/topics/water-quality/watershed-management/excess-nutrients/Documents/NLRS_SCIENCE_ASSESSMENT_UPDATE_2019%20v7_FINAL%20VERSION_web.pdf',
+        label: 'Illinois Nutrient Reduction Strategy Science Assessment Update 2019'
+}
+
+// Initial selections when page is loaded
 export const initialState = {
         boundary: 'drainage',
         nutrient: 'Nitrogen',
@@ -25,9 +36,7 @@ export const GEOSERVER_URL = process.env.GEOSERVER_URL || '';
 // A missing `boundaries` prop from a legend item means it will be shown for all boundary types
 export const CONTEXTUAL_LAYERS: Array<{ title: string; id: string; zIndex?: number, boundaries?: Array<string>}> = [
         { title: 'Rivers', id: 'gltg:us-rivers', zIndex: 2 },
-        { title: 'State Boundaries', id: 'gltg:us-states' },
-        { title: 'IL Drainage - Outside', id: 'gltg:il-drainage-outside', boundaries: ['drainage'] },
-        { title: 'Extrapolated Areas', id: 'gltg:extrapolated-areas', boundaries: ['drainage', 'huc8'] }
+        { title: 'State Boundaries', id: 'gltg:us-states' }
 ];
 
 export const getOverallFeatureLabels = (boundary: string) => {
@@ -35,9 +44,9 @@ export const getOverallFeatureLabels = (boundary: string) => {
         // and the second item is its variable name in `data.json`, which can be used for rendering labels too.
         switch (boundary) {
                 case 'drainage':
-                        return ['Illinois', 'Statewide Summary'];
+                        return [null, 'Statewide Summary'];
                 case 'huc8':
-                        return ['Illinois', 'Statewide Summary'];
+                        return [null, 'Statewide Summary'];
                 case 'watershed':
                         return ['Mississippi River Basin', 'Nutrient Load to Gulf of Mexico'];
                 default:
@@ -53,6 +62,7 @@ export const MAP_BOUNDS = [
 ];
 
 export const getLayerExtent = (boundary: string) =>{
+        // TODO: Can we dynamically determine these?
         switch(boundary){
                 case 'drainage':
                         return [-10673131.179092214,4240945.513367433,-9272804.820907786,5703644.486632567];
@@ -330,3 +340,7 @@ export const VARIABLES_INFO = {
                 )
         }
 };
+
+export const SIDEBAR_INFO = {
+
+}
